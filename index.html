@@ -2,134 +2,111 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Blackmail Contract</title>
+  <title>BLACKMAIL INITIATED</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
-      margin: 0;
-      background: black;
-      color: #00ff00;
+      background-color: black;
+      color: #00ffcc;
       font-family: 'Courier New', monospace;
-      overflow: hidden;
       display: flex;
-      flex-direction: column;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       height: 100vh;
-      text-align: center;
-    }
-
-    h1 {
-      font-size: 4rem;
-      text-shadow: 0 0 10px #0f0;
-    }
-
-    p {
-      font-size: 1.2rem;
-      color: #0f0;
-      opacity: 0.8;
+      margin: 0;
+      overflow: hidden;
+      flex-direction: column;
     }
 
     #startBtn {
-      margin-top: 30px;
-      background: black;
-      color: #00ff00;
-      border: 2px solid #00ff00;
-      padding: 15px 30px;
-      font-size: 1.2rem;
+      background-color: transparent;
+      border: 2px solid #00ffcc;
+      color: #00ffcc;
+      padding: 20px 40px;
+      font-size: 1.5em;
       cursor: pointer;
-      text-shadow: 0 0 5px #0f0;
+      transition: 0.3s ease;
     }
 
     #startBtn:hover {
-      background: #00ff00;
+      background-color: #00ffcc;
       color: black;
     }
 
-    .matrix-bg {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      background: url('https://media.tenor.com/OZ9mG2jG_0sAAAAC/matrix-code.gif') center center / cover no-repeat;
-      opacity: 0.05;
-      z-index: -1;
-    }
-
     #terminal {
-      display: none;
-      margin-top: 40px;
-      white-space: pre-wrap;
-      font-size: 1rem;
+      margin-top: 30px;
+      font-size: 1em;
       text-align: left;
       width: 80%;
-      max-width: 600px;
-      background-color: rgba(0, 255, 0, 0.05);
-      padding: 15px;
-      border: 1px solid #0f0;
-      box-shadow: 0 0 10px #0f0;
+      max-width: 800px;
+      white-space: pre-line;
+      display: none;
     }
 
-    .blink {
-      display: inline-block;
-      width: 10px;
-      background-color: #00ff00;
-      animation: blink 1s steps(2, start) infinite;
+    .blinking {
+      animation: blink 1s infinite;
     }
 
     @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
+      0%, 50%, 100% { opacity: 1; }
+      25%, 75% { opacity: 0; }
     }
   </style>
 </head>
 <body>
-  <div class="matrix-bg"></div>
 
-  <h1>CLICK</h1>
-  <p>for your Blackmail Contract</p>
-  <button id="startBtn">I’m ready</button>
+  <button id="startBtn">CLICK for your Blackmail Contract</button>
 
-  <div id="terminal">
-    <span id="output"></span><span class="blink">&nbsp;</span>
-  </div>
+  <div id="terminal"></div>
 
-  <audio id="accessSound" src="audio/audio.mp3"></audio>
+  <audio id="accessSound" src="audio/blackmail_voice.mp3"></audio>
 
   <script>
     const btn = document.getElementById("startBtn");
-    const output = document.getElementById("output");
-    const terminal = document.getElementById("terminal");
     const audio = document.getElementById("accessSound");
+    const terminal = document.getElementById("terminal");
 
-    const lines = [
-      "> Initiating secure connection...",
-      "> Connecting to BLACKMAIL_SERVER...",
-      "> Identity verified [*******]",
-      "> Permission level: Submissive",
-      "> Access granted ✔",
-      "> Redirecting in 5 seconds..."
+    const terminalLines = [
+      "[+] Establishing connection...",
+      "[+] IP traced...",
+      "[+] Identity confirmed...",
+      "[+] Loading Blackmail Protocol...",
+      "[+] Initializing submission loop...",
+      "[+] Mind access granted.",
+      "[+] Contract locked.",
+      "[*] You are no longer in control..."
     ];
-
-    let i = 0;
-
-    function typeLine() {
-      if (i < lines.length) {
-        output.innerHTML += lines[i] + "\n";
-        i++;
-        setTimeout(typeLine, 700);
-      } else {
-        audio.play();
-        setTimeout(() => {
-          window.location.href = "https://forms.gle/Sbb6CX5yNbLMizeV9";
-        }, 5000);
-      }
-    }
 
     btn.addEventListener("click", () => {
       btn.style.display = "none";
+      audio.play();
       terminal.style.display = "block";
-      typeLine();
+      simulateTerminalText();
+
+      // Redirect dopo 60 secondi (60000 ms)
+      setTimeout(() => {
+        window.location.href = "https://docs.google.com/forms/d/1i2aw35c6DmQ3lf1lA30q7sOXe1CbFOxCXPj6cOs54XE/edit";
+      }, 60000);
     });
+
+    function simulateTerminalText() {
+      let i = 0;
+      const interval = setInterval(() => {
+        if (i < terminalLines.length) {
+          const line = document.createElement("div");
+          line.textContent = terminalLines[i];
+          terminal.appendChild(line);
+          i++;
+        } else {
+          clearInterval(interval);
+          const cursor = document.createElement("div");
+          cursor.textContent = "[*] Awaiting next command...";
+          cursor.classList.add("blinking");
+          terminal.appendChild(cursor);
+        }
+      }, 5000); // ogni 3 secondi una nuova riga
+    }
   </script>
+
 </body>
 </html>
