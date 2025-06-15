@@ -1,52 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>BLACKMAIL INITIATED</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     body {
       background-color: black;
-      color: #00ffcc;
+      color: #00ff66;
       font-family: 'Courier New', monospace;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       margin: 0;
-      overflow: hidden;
       flex-direction: column;
+      overflow: hidden;
     }
-
     #startBtn {
       background-color: transparent;
-      border: 2px solid #00ffcc;
-      color: #00ffcc;
+      border: 2px solid #00ff66;
+      color: #00ff66;
       padding: 20px 40px;
       font-size: 1.5em;
       cursor: pointer;
       transition: 0.3s ease;
+      margin-bottom: 30px;
     }
-
     #startBtn:hover {
-      background-color: #00ffcc;
+      background-color: #00ff66;
       color: black;
     }
-
     #terminal {
-      margin-top: 30px;
-      font-size: 1em;
-      text-align: left;
-      width: 80%;
-      max-width: 800px;
+      width: 90%;
+      max-width: 700px;
       white-space: pre-line;
+      text-align: left;
+      font-size: 1.1em;
+      min-height: 180px;
+      border: 1px solid #00ff66;
+      padding: 15px;
+      box-sizing: border-box;
+      background-color: #001100;
+      border-radius: 6px;
       display: none;
+      overflow-y: auto;
     }
-
     .blinking {
-      animation: blink 1s infinite;
+      animation: blink 1s steps(2, start) infinite;
     }
-
     @keyframes blink {
       0%, 50%, 100% { opacity: 1; }
       25%, 75% { opacity: 0; }
@@ -59,43 +61,43 @@
 
   <div id="terminal"></div>
 
-  <audio id="accessSound" src="audio/blackmail_voice.mp3"></audio>
+  <audio id="accessSound" src="audio/audio.mp3"></audio>
 
   <script>
     const btn = document.getElementById("startBtn");
-    const audio = document.getElementById("accessSound");
     const terminal = document.getElementById("terminal");
+    const audio = document.getElementById("accessSound");
 
-    const terminalLines = [
-      "[+] Establishing connection...",
-      "[+] IP traced...",
-      "[+] Identity confirmed...",
+    const lines = [
+      "[+] Establishing secure connection...",
+      "[+] Tracing IP address...",
+      "[+] Verifying identity...",
       "[+] Loading Blackmail Protocol...",
-      "[+] Initializing submission loop...",
-      "[+] Mind access granted.",
-      "[+] Contract locked.",
-      "[*] You are no longer in control..."
+      "[+] Engaging neural lock...",
+      "[+] Contract encrypted and sealed.",
+      "[*] You have no escape now.",
+      "[*] Your mind belongs to me."
     ];
 
     btn.addEventListener("click", () => {
       btn.style.display = "none";
-      audio.play();
       terminal.style.display = "block";
-      simulateTerminalText();
+      audio.play();
+      showLinesSequentially(lines, 3000);
 
-      // Redirect dopo 60 secondi (60000 ms)
       setTimeout(() => {
         window.location.href = "https://docs.google.com/forms/d/1i2aw35c6DmQ3lf1lA30q7sOXe1CbFOxCXPj6cOs54XE/edit";
       }, 60000);
     });
 
-    function simulateTerminalText() {
+    function showLinesSequentially(linesArray, delay) {
       let i = 0;
       const interval = setInterval(() => {
-        if (i < terminalLines.length) {
+        if(i < linesArray.length){
           const line = document.createElement("div");
-          line.textContent = terminalLines[i];
+          line.textContent = linesArray[i];
           terminal.appendChild(line);
+          terminal.scrollTop = terminal.scrollHeight;
           i++;
         } else {
           clearInterval(interval);
@@ -103,8 +105,9 @@
           cursor.textContent = "[*] Awaiting next command...";
           cursor.classList.add("blinking");
           terminal.appendChild(cursor);
+          terminal.scrollTop = terminal.scrollHeight;
         }
-      }, 5000); // ogni 3 secondi una nuova riga
+      }, delay);
     }
   </script>
 
